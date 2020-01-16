@@ -4,7 +4,7 @@ This repository contains my Capstone Project completed during General Assembly's
 ### Introduction to crypto terminology: coins spec
 Find as follow basic knowladge and facts about the coins and their realted blockchains:
 
-![image-20200116155329116](/Users/riccardoanacar/Library/Application Support/typora-user-images/image-20200116155329116.png)
+![image-20200116155329116](./coins_spec.png)
 
 
 
