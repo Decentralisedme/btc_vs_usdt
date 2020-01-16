@@ -1,4 +1,4 @@
-# Data Science Capstone Project: Bitcoin vs Tether
+# dData Science Capstone Project: Bitcoin vs Tether
 This repository contains my Capstone Project completed during General Assembly's Data Science Immersive.
 
 ### Introduction to crypto terminology: coins spec
@@ -152,15 +152,17 @@ Ethereum and Bitcoin, being two differnt blockchains, generate blocks, and there
 
 - Tether
 
-
+  ![image-20200116155329116](./usdt_df.png)
 
 - Bitcoin
 
-![](/Users/riccardoanacar/Desktop/CapPro/GA/btc_vs_usdt/Aug19_btc_vs_usdt/btc_df.png)
+![image-20200116155329116](./btc_df.png)
 
 
 
-### Correlation and Data Distribution
+
+
+!Correlation and Data Distribution
 
 
 
