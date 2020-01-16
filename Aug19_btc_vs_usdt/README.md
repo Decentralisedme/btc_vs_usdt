@@ -22,7 +22,12 @@ categories:
 
 ### Project Goal
 
-The aim of the project is to investigate a possible relationship between Tether coin, which is a stable coin paged to the dollar, and the quantity of Bitcoin that has been transacted during the same period
+The aim of the project is to investigate a possible relationship between Tether coin, which is a stable coin paged to the dollar, and the quantity of Bitcoin that has been transacted during the same period.
+
+Period taken in consideration:
+
+- From: 1-Aug-2019
+- To: 31-Aug-2019
 
 Given the definition of stablecoin itself, USDT is thought to be used as hedging instrument in the following market conditions:
 
@@ -77,7 +82,9 @@ for row in range(0, len(usdt_tx_list)):
 usdt_tx_data`
 ```
 
-This step allows us to get inside each Tether transaction and collect its infirmation:
+This step allows us to get inside each Tether transaction and collect its:
+
+- Transaction infirmation
 
 ```
 AttributeDict({'blockHash': HexBytes('0x2994bdaa2fcd0e1c4d8b854cdb949cb65bdb696ef1243a7df799c8c23ff492d6'),
@@ -109,10 +116,56 @@ FROM
 WHERE TRUE
  AND transactions.to_address = "0xdac17f958d2ee523a2206206994597c13d831ec7"
  AND transactions.block_timestamp >= "2019-08-01" AND transactions.block_timestamp <= "2019-08-02"
-"""```
+"""
+query_job = client.query(query_usdt)
+iterator = query_job.result(timeout=50)
+myrows = list(iterator)
 ```
 
 I used similar apprach for Bitcoin
 
-### Predictors
+### Predictors: Thether Tx information
 
+Some of the predictors can be taken directly from the transaction information, moreover themost relevant information are in the input field:
+
+| input': | '0xa9059cbb0000000000000000000000007f053e4c0503629747d3e768dfb2eb1f63822d930000000000000000000000000000000000000000000000000000000007b41626', |
+| ------- | :----------------------------------------------------------- |
+|         |                                                              |
+
+The long string has 4 parts, each part give us a different information:
+
+- 0x = it means that the value that follows is an hexadecimal value
+- a9059cbb =  Method ID, the function identifier of 8 bytes
+- Theb Function parameters are 2 groups of exactly 32 bytes: 
+  - Address to send to: indicate the address where the coins are sent 
+  - Qunatity: the socond is the amount, quantity that has been sent
+
+By splitting the input in 4 meaningfull hexadecimal values, and transform the values in dcimals values we can obtain of the deisred predictors.
+
+### Target: Bitcoin Quantity
+
+Using the same source BigQuery database I have retrived Bitcoin transaction data with similar sql query.
+
+### Time alignemnt 
+
+Ethereum and Bitcoin, being two differnt blockchains, generate blocks, and therefore auhaticate tranactions at different time and freqency. To make the quantity transactions of the two coins compearable I grouped the transactions and summed the quantity with intervals of 30 minutes, with the following final results: 
+
+- Tether
+
+
+
+- Bitcoin
+
+![](/Users/riccardoanacar/Desktop/CapPro/GA/btc_vs_usdt/Aug19_btc_vs_usdt/btc_df.png)
+
+
+
+### Correlation and Data Distribution
+
+
+
+### Standardizations
+
+
+
+### Models and results
