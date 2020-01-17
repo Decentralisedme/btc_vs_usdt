@@ -10,11 +10,7 @@ Find as follow basic knowladge and facts about the coins and their realted block
 
 ### 1.b Stablecoins definition
 
-Sstabilise the price of the “coin” by linking its value to
-
-the value of one asset or a pool of assets. We can identify the following
-
-categories:
+Stabilise the price of the “coin” by linking its value to the value of one asset or a pool of assets. We can identify the following categories:
 
 - Fiat-Backed Stablecoins: Tether
 - Crypto-Collateralized Stablecoins: EOSTD / DAI
@@ -22,7 +18,7 @@ categories:
 
 ### 2 Project Goal
 
-The aim of the project is to investigate a possible relationship between Tether coin, which is a stable coin paged to the dollar, and the quantity of Bitcoin that has been transacted during the same period.
+The aim of the project is to investigate a possible relationship between Tether coin, which is a stablecoin paged to the dollar, and the quantity of Bitcoin that has been transacted during the same period.
 
 Period taken in consideration:
 
@@ -38,9 +34,9 @@ Given the definition of stablecoin itself, USDT is thought to be used as hedging
 
 ### 3 Data collection
 
-The data are available in the blockchains moreover the ability to commnect to nodes and download the blocks and filter for wanted information have lot of obstacoles, in particular time needed to download the data.
+The data are available in the blockchains moreover the ability to commnect to nodes and download the blocks and filter for wanted information has lot of ob, in particular time needed to download the data.
 
-I have to implement different apperaches according to compromise with it:
+I have to implement different apperaches to compromise with thesse obstacles:
 
 #### 3.a Tether from Ethereum Blockchain
 
@@ -82,7 +78,7 @@ for row in range(0, len(usdt_tx_list)):
 usdt_tx_data`
 ```
 
-This step allows us to get inside each Tether transaction and collect its:
+This step allows us to get inside each Tether transaction and retrieve the information:
 
 - Transaction infirmation
 
@@ -105,7 +101,7 @@ AttributeDict({'blockHash': HexBytes('0x2994bdaa2fcd0e1c4d8b854cdb949cb65bdb696e
 
 #### 3.b Theter Transactions from Google BigQuery
 
-Google BigQuery provides database with Ethereum and Bitcoin blockchian. Here I the query that I wrote to retrive Tether transactions using SQL:
+Google BigQuery provides database with Ethereum and Bitcoin blockchian. Here the query that I wrote to retrive Tether transactions using SQL:
 
 ``` sql
 SELECT
@@ -126,21 +122,21 @@ I used similar apprach for Bitcoin
 
 ### 4 Predictors: Thether Tx information
 
-Some of the predictors can be taken directly from the transaction information, moreover themost relevant information are in the input field:
+Some of the predictors can be taken directly from the transaction information, moreover the most relevant information are in the input field:
 
 | input': | '0xa9059cbb0000000000000000000000007f053e4c0503629747d3e768dfb2eb1f63822d930000000000000000000000000000000000000000000000000000000007b41626', |
 | ------- | :----------------------------------------------------------- |
 |         |                                                              |
 
-The long string has 4 parts, each part give us a different information:
+The long string has 4 parts, each part gives us a different information:
 
 - 0x = it means that the value that follows is an hexadecimal value
 - a9059cbb =  Method ID, the function identifier of 8 bytes
-- Theb Function parameters are 2 groups of exactly 32 bytes: 
+- The Function parameters are 2 groups of exactly 32 bytes: 
   - Address to send to: indicate the address where the coins are sent 
   - Qunatity: the socond is the amount, quantity that has been sent
 
-By splitting the input in 4 meaningfull hexadecimal values, and transform the values in dcimals values we can obtain of the deisred predictors.
+By splitting the input in 4 meaningfull hexadecimal values, and transform the values in dcimals values we can obtain the deisred predictors.
 
 ### 5 Target: Bitcoin Quantity
 
@@ -148,7 +144,7 @@ Using the same source BigQuery database I have retrived Bitcoin transaction data
 
 ### 6 Time alignemnt 
 
-Ethereum and Bitcoin, being two differnt blockchains, generate blocks, and therefore auhaticate tranactions at different time and freqency. To make the quantity transactions of the two coins compearable I grouped the transactions and summed the quantity with intervals of 30 minutes, with the following final results: 
+Ethereum and Bitcoin, being two differnt blockchains, generate blocks and therefore auhaticate tranactions at different time and freqency. To make the quantity transactions of the two coins compearable and alligned I grouped the transactions and summed the quantity with intervals of 30 minutes, with the following final results: 
 
 - Tether
 
@@ -174,7 +170,7 @@ Ethereum and Bitcoin, being two differnt blockchains, generate blocks, and there
 
 ### 9 TimeSeriesSplit and CrossValidation
 
-After few test with train test split and give the relevance of time in the predition I have decided to appy TSS:
+After few tests with train test split and given the relevance of time in the predition I have decided to apply TSS:
 
 ```python
 from sklearn.model_selection import cross_val_score, TimeSeriesSplit
@@ -213,5 +209,6 @@ print(scores.mean())
 
 It seems I cannot use tether to predict bitcoins qty transactions:
 
-- Comparing two different blockchains has a lot of implications and constrain on the analysis
+- Comparing two different blockchains has a lot of implications and constrain on the analysiblockchain
+- 
 - I would expect better results when comparing data from Exchanges 
