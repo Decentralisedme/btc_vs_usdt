@@ -1,42 +1,6 @@
 # Data Science Capstone Project: Bitcoin vs Tether
 This repository contains my Capstone Project completed during General Assembly's Data Science Immersive.
 
-### Table of Content
-
-1.a Introduction to crypto terminology: coins spec
-
-1.b Stablecoins definition
-
-2 Project Goal
-
-3 Data collection
-
-​	3.a Tether from Ethereum Blockchain
-
-​		3.a.1 Connect to Infura node using Web3 python library
-
-​		3.a.2 Filter for Tether transactions: 
-
-​		3.a.3 Get information about Tether transaction from the Tether transaction number
-
-​	3.b Theter Transactions from Google BigQuery
-
-4 Predictors: Thether Tx information
-
-5 Target: Bitcoin Quantity
-
-6 Time alignemnt
-
-7 Correlation 
-
-8 Predictors Distribution
-
-9 TimeSeriesSplit and CrossValidation
-
-10 Conclusion
-
-
-
 ### 1.a Introduction to crypto terminology: coins spec
 Find as follow basic knowladge and facts about the coins and their realted blockchains:
 
