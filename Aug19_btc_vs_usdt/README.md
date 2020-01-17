@@ -1,14 +1,16 @@
 # dData Science Capstone Project: Bitcoin vs Tether
 This repository contains my Capstone Project completed during General Assembly's Data Science Immersive.
 
-### Introduction to crypto terminology: coins spec
+[TOC]
+
+### 1.a Introduction to crypto terminology: coins spec
 Find as follow basic knowladge and facts about the coins and their realted blockchains:
 
 ![image-20200116155329116](./coins_spec.png)
 
 
 
-### Stablecoins definition
+### 1.b Stablecoins definition
 
 Sstabilise the price of the “coin” by linking its value to
 
@@ -20,7 +22,7 @@ categories:
 - Crypto-Collateralized Stablecoins: EOSTD / DAI
 - Commodities-backed Stablecoins: Digix - Non-Collateralized:
 
-### Project Goal
+### 2 Project Goal
 
 The aim of the project is to investigate a possible relationship between Tether coin, which is a stable coin paged to the dollar, and the quantity of Bitcoin that has been transacted during the same period.
 
@@ -36,17 +38,17 @@ Given the definition of stablecoin itself, USDT is thought to be used as hedging
 - **High correlation**: stablecoins allow you to manage your position 
 - **Short Term borrowing**
 
-### Data collection
+### 3 Data collection
 
 The data are available in the blockchains moreover the ability to commnect to nodes and download the blocks and filter for wanted information have lot of obstacoles, in particular time needed to download the data.
 
 I have to implement different apperaches according to compromise with it:
 
-#### 1 - Tether from Ethereum Blockchain
+#### 3.a Tether from Ethereum Blockchain
 
 To interact with any clockchain you need to manage your own node or connect to an existing node which is part of the blockchain.
 
-###### Connect to Infura node using Web3 python library
+###### 3.a.1 Connect to Infura node using Web3 python library
 
 ```python
 from web3 import Web3
@@ -55,7 +57,7 @@ web3 = Web3(Web3.HTTPProvider("https://mainnet.infura.io/c4674c2dfb9c4d62b92e662
 web3.isConnected()
 ```
 
-######  Filter for Tether transactions: 
+######  3.a.2 Filter for Tether transactions: 
 
 Once connected to the node you can retived blocks IDs and their transactions
 
@@ -72,7 +74,7 @@ for b in range(0,200):
             usdt_tx_list.append(tx[b][i])
 ```
 
-###### Get information about Tether transaction from the Tether transaction number
+###### 3.a.3 Get information about Tether transaction from the Tether transaction number
 
 ``` python
 usdt_tx_data = []
@@ -103,7 +105,7 @@ AttributeDict({'blockHash': HexBytes('0x2994bdaa2fcd0e1c4d8b854cdb949cb65bdb696e
   'value': 0})
 ```
 
-#### 2 - Theter Transactions from Google BigQuery
+#### 3.b Theter Transactions from Google BigQuery
 
 Google BigQuery provides database with Ethereum and Bitcoin blockchian. Here I the query that I wrote to retrive Tether transactions using SQL:
 
@@ -124,7 +126,7 @@ myrows = list(iterator)
 
 I used similar apprach for Bitcoin
 
-### Predictors: Thether Tx information
+### 4 Predictors: Thether Tx information
 
 Some of the predictors can be taken directly from the transaction information, moreover themost relevant information are in the input field:
 
@@ -142,11 +144,11 @@ The long string has 4 parts, each part give us a different information:
 
 By splitting the input in 4 meaningfull hexadecimal values, and transform the values in dcimals values we can obtain of the deisred predictors.
 
-### Target: Bitcoin Quantity
+### 5 Target: Bitcoin Quantity
 
 Using the same source BigQuery database I have retrived Bitcoin transaction data with similar sql query.
 
-### Time alignemnt 
+### 6 Time alignemnt 
 
 Ethereum and Bitcoin, being two differnt blockchains, generate blocks, and therefore auhaticate tranactions at different time and freqency. To make the quantity transactions of the two coins compearable I grouped the transactions and summed the quantity with intervals of 30 minutes, with the following final results: 
 
@@ -162,12 +164,56 @@ Ethereum and Bitcoin, being two differnt blockchains, generate blocks, and there
 
 
 
-!Correlation and Data Distribution
+### 7 Correlation 
+
+![image-20200116155329116](./corr.png)
+
+### 8 Predictors Distribution
+
+![image-20200116155329116](./dist.png)
 
 
 
-### Standardizations
+### 9 TimeSeriesSplit and CrossValidation
+
+After few test with train test split and give the relevance of time in the predition I have decided to appy TSS:
+
+```python
+from sklearn.model_selection import cross_val_score, TimeSeriesSplit
+
+ts = TimeSeriesSplit(n_splits=3)
+
+splits = [(tr, te) for (tr, te) in ts.split(usdt_Aug19)]
+splits
+```
+
+The use of TSS with the CrossValidation has improved the score values substantially:
+
+**Linear Regression**
+
+``` 
+model = LinearRegression()
+scores = cross_val_score(model, tr, y, cv=ts)
+print(scores.mean())
+```
+
+Score = -51.07150111344141
+
+**Random Forest**
+
+```python
+scores = cross_val_score(model, tr, y, cv=ts)
+
+print(scores.mean())
+```
+
+ Score = -0.24630923671118335
 
 
 
-### Models and results
+### 10 Conclusion
+
+It seems I cannot use tether to predict bitcoins qty transactions:
+
+- Comparing two different blockchains has a lot of implications and constrain on the analysis
+- I would expect better results when comparing data from Exchanges 
