@@ -210,5 +210,4 @@ print(scores.mean())
 It seems I cannot use tether to predict bitcoins qty transactions:
 
 - Comparing two different blockchains has a lot of implications and constrain on the analysiblockchain
-- 
 - I would expect better results when comparing data from Exchanges 
