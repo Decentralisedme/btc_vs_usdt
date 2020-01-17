@@ -1,4 +1,4 @@
-# dData Science Capstone Project: Bitcoin vs Tether
+# Data Science Capstone Project: Bitcoin vs Tether
 This repository contains my Capstone Project completed during General Assembly's Data Science Immersive.
 
 [TOC]
