@@ -34,13 +34,13 @@ Given the definition of stablecoin itself, USDT is thought to be used as hedging
 
 ### 3 Data collection
 
-The data are available in the blockchains moreover the ability to commnect to nodes and download the blocks and filter for wanted information has lot of ob, in particular time needed to download the data.
+The data are available in the blockchains. It is feasible to connect to the blockchain network and look for specific information, moreover there are few drawbacks with processing time one of the most problematic.
 
-I have to implement different apperaches to compromise with thesse obstacles:
+I have to implement different approaches to compromise with these obstacles:
 
 #### 3.a Tether from Ethereum Blockchain
 
-To interact with any clockchain you need to manage your own node or connect to an existing node which is part of the blockchain.
+To interact with any blockchain you need to manage your own node or connect to an existing node which is part of the blockchain.
 
 ###### 3.a.1 Connect to Infura node using Web3 python library
 
@@ -53,9 +53,9 @@ web3.isConnected()
 
 ######  3.a.2 Filter for Tether transactions: 
 
-Once connected to the node you can retived blocks IDs and their transactions
+Once connected to the node you can retrieve blocks IDs and their transactions.
 
-After putting the Tx numbers in a python list you can filter for the Tether smart contract number 
+After putting the Tx numbers in a python list you can filter for the Tether smart contract number:
 
 ``` python
 # USDC = 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48
@@ -68,7 +68,9 @@ for b in range(0,200):
             usdt_tx_list.append(tx[b][i])
 ```
 
-###### 3.a.3 Get information about Tether transaction from the Tether transaction number
+###### 3.a.3 Get information contained in each Tether transaction:
+
+Once we have the list of transactions we can then retrieve the content
 
 ``` python
 usdt_tx_data = []
@@ -118,7 +120,7 @@ iterator = query_job.result(timeout=50)
 myrows = list(iterator)
 ```
 
-I used similar apprach for Bitcoin
+I used similar approach for Bitcoin
 
 ### 4 Predictors: Thether Tx information
 
@@ -133,10 +135,10 @@ The long string has 4 parts, each part gives us a different information:
 - 0x = it means that the value that follows is an hexadecimal value
 - a9059cbb =  Method ID, the function identifier of 8 bytes
 - The Function parameters are 2 groups of exactly 32 bytes: 
-  - Address to send to: indicate the address where the coins are sent 
-  - Qunatity: the socond is the amount, quantity that has been sent
+  - Address to send to: the address where the coins are sent 
+  - Qunatity:  the amount, quantity that has been sent
 
-By splitting the input in 4 meaningfull hexadecimal values, and transform the values in dcimals values we can obtain the deisred predictors.
+By splitting the input in 4 meaningfull hexadecimal values, and transform the values in decimals values we can obtain the desired predictors values.
 
 ### 5 Target: Bitcoin Quantity
 
@@ -144,7 +146,7 @@ Using the same source BigQuery database I have retrived Bitcoin transaction data
 
 ### 6 Time alignemnt 
 
-Ethereum and Bitcoin, being two differnt blockchains, generate blocks and therefore auhaticate tranactions at different time and freqency. To make the quantity transactions of the two coins compearable and alligned I grouped the transactions and summed the quantity with intervals of 30 minutes, with the following final results: 
+Ethereum and Bitcoin, being two differnt blockchains, generate blocks and therefore authenticate tranactions at different time and frequency. To make the quantity transactions of the two coins comparable and aligned I grouped the transactions and summed the quantity with intervals of 30 minutes, with the following final results: 
 
 - Tether
 
@@ -207,7 +209,7 @@ print(scores.mean())
 
 ### 10 Conclusion
 
-It seems I cannot use tether to predict bitcoins qty transactions:
+It seems I cannot use on chain tether transactions to predict bitcoins quantity transactions:
 
 - Comparing two different blockchains has a lot of implications and constrain on the analysiblockchain
 - I would expect better results when comparing data from Exchanges 
