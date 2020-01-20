@@ -205,11 +205,29 @@ print(scores.mean())
 
  Score = -0.24630923671118335
 
+**LassoCV**
+
+```python
+scores_LS = cross_val_score(model_LS, Xstd_train_pwr, y_train, cv=ts) 
+print("Mean cross-validated training score:", scores_LS.mean())
+print("Training Score:", model_LS.score(Xstd_train_pwr, y_train))
+```
+
+ Mean cross-validated training score: -0.1422666096209763
+Training Score: 0.023167806457516593
+
+Please.notice below the comparison between predicted values, calculated with the LassoCV model and tha actual Bitcoin quantity values:
+
+![image-20200116155329116](./ls_predict.png)
+
+![image-20200116155329116](./btc_target.png) 
+
 
 
 ### 10 Conclusion
 
 It seems I cannot use on chain tether transactions to predict bitcoins quantity transactions:
 
-- Comparing two different blockchains has a lot of implications and constrain on the analysiblockchain
+- Comparing two different blockchains has a lot of implications and constrains on the analysis
+- LassoCV performed slightly better, penalising faster the correlation among predictors 
 - I would expect better results when comparing data from Exchanges 
