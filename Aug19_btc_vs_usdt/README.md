@@ -2,7 +2,7 @@
 This repository contains my Capstone Project completed during General Assembly's Data Science Immersive.
 
 ### 1.a Introduction to crypto terminology: coins spec
-Find as follow basic knowladge and facts about the coins and their realted blockchains:
+Find as follow basic knowledge and facts about the coins and their related blockchains:
 
 ![image-20200116155329116](./coins_spec.png)
 
@@ -53,7 +53,7 @@ web3.isConnected()
 
 ######  3.a.2 Filter for Tether transactions: 
 
-Once connected to the node you can retrieve blocks IDs and their transactions.
+Once connected to the node you can retrieve blocks IDs and its transactions.
 
 After putting the Tx numbers in a python list you can filter for the Tether smart contract number:
 
@@ -103,7 +103,7 @@ AttributeDict({'blockHash': HexBytes('0x2994bdaa2fcd0e1c4d8b854cdb949cb65bdb696e
 
 #### 3.b Theter Transactions from Google BigQuery
 
-Google BigQuery provides database with Ethereum and Bitcoin blockchian. Here the query that I wrote to retrive Tether transactions using SQL:
+Google BigQuery provides database with Ethereum and Bitcoin blockchian. Here the query that I wrote to retrieve Tether transactions using SQL:
 
 ``` sql
 SELECT
@@ -136,17 +136,17 @@ The long string has 4 parts, each part gives us a different information:
 - a9059cbb =  Method ID, the function identifier of 8 bytes
 - The Function parameters are 2 groups of exactly 32 bytes: 
   - Address to send to: the address where the coins are sent 
-  - Qunatity:  the amount, quantity that has been sent
+  - Quantity:  the amount, quantity that has been sent
 
-By splitting the input in 4 meaningfull hexadecimal values, and transform the values in decimals values we can obtain the desired predictors values.
+By splitting the input in 4 meaningful hexadecimal values, and transform the values in decimals values we can obtain the desired predictors values.
 
 ### 5 Target: Bitcoin Quantity
 
-Using the same source BigQuery database I have retrived Bitcoin transaction data with similar sql query.
+Using the same source BigQuery database I have retrieved Bitcoin transaction data with similar sql query.
 
-### 6 Time alignemnt 
+### 6 Time alignment 
 
-Ethereum and Bitcoin, being two differnt blockchains, generate blocks and therefore authenticate tranactions at different time and frequency. To make the quantity transactions of the two coins comparable and aligned I grouped the transactions and summed the quantity with intervals of 30 minutes, with the following final results: 
+Ethereum and Bitcoin, being two different blockchains, generate blocks and therefore authenticate transactions at different time and frequency. To make the quantity transactions of the two coins comparable and aligned I grouped the transactions and summed the quantity with intervals of 30 minutes, with the following final results: 
 
 - Tether
 
@@ -172,7 +172,7 @@ Ethereum and Bitcoin, being two differnt blockchains, generate blocks and theref
 
 ### 9 TimeSeriesSplit and CrossValidation
 
-After few tests with train test split and given the relevance of time in the predition I have decided to apply TSS:
+After few tests with train test split and given the relevance of time in the prediction I have decided to apply TSS:
 
 ```python
 from sklearn.model_selection import cross_val_score, TimeSeriesSplit
@@ -216,7 +216,7 @@ print("Training Score:", model_LS.score(Xstd_train_pwr, y_train))
  Mean cross-validated training score: -0.1422666096209763
 Training Score: 0.023167806457516593
 
-Please.notice below the comparison between predicted values, calculated with the LassoCV model and tha actual Bitcoin quantity values:
+Please.notice below the comparison between predicted values, calculated with the LassoCV model and the actual Bitcoin quantity values:
 
 ![image-20200116155329116](./ls_predict.png)
 
